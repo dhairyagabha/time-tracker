@@ -1,0 +1,22 @@
+.container
+  .d-flex.justify-content-between.align-items-center
+    %h1.light My Clients
+    = link_to 'New Client', new_client_path, class:'btn btn-primary'
+  .mt-3
+    %table.table
+      %thead
+        %tr
+          %th Name
+          %th Workspace
+          %th
+          %th
+          %th
+
+      %tbody
+        - @clients.each do |client|
+          %tr
+            %td= client.name
+            %td= client.workspace
+            %td= link_to 'Show', client
+            %td= link_to 'Edit', edit_client_path(client)
+            %td= link_to 'Destroy', client, method: :delete, data: { confirm: 'Are you sure?' }

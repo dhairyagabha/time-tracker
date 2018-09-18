@@ -1,0 +1,27 @@
+%header
+  %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
+    = link_to 'Time Tracker', root_path, class:'navbar-brand'
+    %button.navbar-toggler{type: 'button', 'data-toggle': 'collapse', 'data-target': '#navbarSupportedContent', 'aria-controls': "navbarSupportedContent", 'aria-expanded':false, 'aria-label': "Toggle navigation"}
+      %span.navbar-toggler-icon
+    .collapse.navbar-collapse#navbarSupportedContent
+      %ul.navbar-nav.ml-auto
+        %li.nav-item.active
+          = link_to 'Home', root_path, class:'nav-link'
+        %li.nav-item.active
+          = link_to 'Clients', clients_path, class:'nav-link'
+        %li.nav-item.active
+          = link_to 'Projects', projects_path, class:'nav-link'
+        %li.nav-item.active
+          = link_to 'Workspaces', workspaces_path, class:'nav-link'
+        - if !current_user.present?
+          %li.nav-item
+            = link_to 'Sign In', new_user_session_path, class:'nav-link'
+          %li.nav-item
+            = link_to 'Sign Up', new_user_registration_path, class:'nav-link'
+        - if current_user
+          %li.nav-item.dropdown
+            = link_to current_user.name, '#', class: 'nav-link dropdown-toggle', id: 'navbarDropdown', role: 'button', 'data-toggle': 'dropdown'
+            .dropdown-menu
+              = link_to 'Profile', '#', class:'dropdown-item'
+              = link_to 'Settings', '#', class:'dropdown-item'
+              = link_to 'Logout', destroy_user_session_path, method: :delete, class:'dropdown-item'

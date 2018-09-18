@@ -1,0 +1,19 @@
+.container
+  .d-flex.justify-content-between.align-items-center
+    %h1.light My Workspaces
+    = link_to 'New Workspace', new_workspace_path, class:'btn btn-primary'
+  .mt-3
+    %table.table
+      %thead
+        %tr
+          %th Workspace Name
+          %th
+          %th
+          %th
+      %tbody
+        - @workspaces.each do |workspace|
+          %tr
+            %td= link_to workspace.name, workspace
+            %td= link_to 'Show', workspace
+            %td= link_to 'Edit', edit_workspace_path(workspace)
+            %td= link_to 'Destroy', workspace, method: :delete, data: { confirm: 'Are you sure?' }

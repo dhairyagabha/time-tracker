@@ -1,0 +1,13 @@
+= form_for @workspace do |f|
+  - if @workspace.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@workspace.errors.count, "error")} prohibited this workspace from being saved:"
+      %ul
+        - @workspace.errors.full_messages.each do |message|
+          %li= message
+  .form-group
+    = f.label :name, 'Workspace Name', class:'sr-only'
+    = f.text_field :name, placeholder: 'Workspace Name', class:'form-control'
+  .actions.row.m-0.justify-content-between
+    = f.submit 'Save', class:'btn btn-primary'
+    = link_to 'Cancel', workspaces_path, class:'btn btn-light'
