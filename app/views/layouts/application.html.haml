@@ -8,10 +8,21 @@
     = stylesheet_link_tag    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', integrity: 'sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm', crossorigin: 'anonymous'
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'https://code.jquery.com/jquery-3.2.1.slim.min.js', integrity:'sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN', crossorigin:'anonymous'
+    = stylesheet_link_tag  'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css'
+    = javascript_include_tag  'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js'
+    = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js'
   %body.bg-light
     = render partial:'layouts/shared/header'
     %main{role: 'main'}
       = yield
-    = javascript_include_tag 'https://code.jquery.com/jquery-3.2.1.slim.min.js', integrity:'sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN', crossorigin:'anonymous'
     = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', integrity:'sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q', crossorigin:'anonymous'
     = javascript_include_tag 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', integrity:'sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl', crossorigin:'anonymous'
+    - if user_signed_in?
+      - if @timer.persisted?
+        %script
+          window.setInterval(function(){
+          var timer = moment.utc((moment(new Date($.now()), "DD/MM/YYYY HH:mm:ss").local()).diff(moment(new Date(#{(@timer.started_at.to_f)}*1000), "DD/MM/YYYY HH:mm:ss").local())).format("HH:mm:ss");
+          $('#runningTimer')[0].innerText = timer;
+          $('title')[0].innerText = timer + " | TimeTracker";
+          }, 1000)

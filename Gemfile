@@ -38,6 +38,7 @@ gem 'devise'
 gem 'haml'
 gem 'haml-rails'
 gem 'jquery-rails'
+gem 'octicons'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 

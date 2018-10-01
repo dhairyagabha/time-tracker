@@ -1,5 +1,8 @@
-%h1 New client
-
-= render 'form'
-
-= link_to 'Back', clients_path
+.container
+  .d-flex.justify-content-center
+    .col-md-6.col-12
+      .card.mt-5
+        .card-body
+          %h2.card-title.text-center New client
+          .card-body
+            = render 'form'

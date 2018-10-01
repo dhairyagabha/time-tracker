@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_14_041202) do
+ActiveRecord::Schema.define(version: 2018_09_19_132556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,19 @@ ActiveRecord::Schema.define(version: 2018_09_14_041202) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["client_id"], name: "index_projects_on_client_id"
+  end
+
+  create_table "timers", force: :cascade do |t|
+    t.string "description"
+    t.bigint "project_id"
+    t.bigint "workspace_id"
+    t.boolean "billable"
+    t.datetime "started_at"
+    t.datetime "stopped_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_timers_on_project_id"
+    t.index ["workspace_id"], name: "index_timers_on_workspace_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -52,6 +65,7 @@ ActiveRecord::Schema.define(version: 2018_09_14_041202) do
     t.datetime "locked_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "timezone", default: "Central Time (US & Canada)"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -60,13 +74,15 @@ ActiveRecord::Schema.define(version: 2018_09_14_041202) do
 
   create_table "workspaces", force: :cascade do |t|
     t.string "name"
-    t.bigint "users_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["users_id"], name: "index_workspaces_on_users_id"
+    t.index ["user_id"], name: "index_workspaces_on_users_id"
   end
 
   add_foreign_key "clients", "workspaces"
   add_foreign_key "projects", "clients"
-  add_foreign_key "workspaces", "users", column: "users_id"
+  add_foreign_key "timers", "projects"
+  add_foreign_key "timers", "workspaces"
+  add_foreign_key "workspaces", "users"
 end

@@ -1,23 +1,22 @@
-%h1 Listing projects
+.container
+  .d-flex.justify-content-between.align-items-center
+    %h1.light My Projects
+    = link_to 'New Project', new_project_path, class:'btn btn-primary'
+  .mt-3
+    %table.table
+      %thead
+        %tr
+          %th Name
+          %th Client
+          %th
+          %th
+          %th
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th Client
-      %th
-      %th
-      %th
-
-  %tbody
-    - @projects.each do |project|
-      %tr
-        %td= project.name
-        %td= project.client
-        %td= link_to 'Show', project
-        %td= link_to 'Edit', edit_project_path(project)
-        %td= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
-
-= link_to 'New Project', new_project_path
+      %tbody
+        - @projects.each do |project|
+          %tr
+            %td= project.name
+            %td= project.client.name
+            %td= link_to 'Show', project
+            %td= link_to 'Edit', edit_project_path(project)
+            %td= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' }

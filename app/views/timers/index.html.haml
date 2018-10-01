@@ -1,0 +1,33 @@
+= form_for(@timer, html:{class:'d-flex justify-content-between'}) do |f|
+  .col-md-7.col-12
+    .form-group
+      = f.label :description, class:'sr-only'
+      = f.text_field :description, placeholder: :description, class:'form-control'
+  .col-md-3.col-12
+    .form-group
+      = f.label :project, class:'sr-only'
+      = f.select :project_id, current_user.projects.map{|p| ["#{p.name} - #{p.client.name}", p.id]}, {}, class:'form-control', placeholder: 'Please select a project'
+  .col-md-2.col-12
+    #runningTimer
+      00:00:00
+    .actions
+      = button_tag(type: 'submit', class:'btn btn-secondary btn-circle') do
+        #{@timer.persisted? ? octicons('x').html_safe : octicons('triangle-right').html_safe}
+.container
+  .mt-3
+    - @timers.each do |date,log|
+      .day-section
+        = date.strftime('%d %b, %Y')
+        %ul.list-group.timer-list
+        - log.each do |tl|
+          %li.list-group-item.d-flex.justify-content-between.align-items-center
+            = tl.description
+            - if tl.project.present?
+              %span.project-details
+                #{tl.project.name} – #{tl.project.client.name}
+            %span.text-center
+              - if tl.stopped_at.present?
+                #{time_diff(tl.started_at, tl.stopped_at)}
+                %br
+              %small.text-muted
+                #{tl.started_at.strftime('%H:%M:%S')} - #{tl.stopped_at.present? ? tl.stopped_at.strftime('%H:%M:%S') : 'Ongoing'}

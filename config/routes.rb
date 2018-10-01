@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # Devise Users
   devise_for :users
   authenticated :user do
-    root 'home#index', as: :authenticated_root
+    root 'timers#index', as: :authenticated_root
   end
   root to:'home#index'
 
@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :projects
   resources :clients
   resources :workspaces
+  resources :timers
 
 
 end
